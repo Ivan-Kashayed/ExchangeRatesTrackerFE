@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="m-3 page-container" >
+    <form [formGroup]="currencyFormGroup" >
+      <div class="p-5 d-flex">
+        <mat-label>To convert the Czech Republic Koruna into other currency, select currency and enter the required amount in the left part of the converter. To convert other currency into Czech Republic Koruna, enter the amount of the currency in the right part.</mat-label>
+        
+        <mat-form-field appearance="fill" [style.width.px]="250">
+          <mat-label>Exchange rate day</mat-label>
+          <div class="date-container">
+            <input matInput [matDatepicker]="picker" formControlName="date" [max]="today" [min]="minDate">
+            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          </div>
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-center">
+        <mat-form-field appearance="fill" [style.width.px]="250">
+          <mat-label>Currency</mat-label>
+          <mat-select formControlName="korunaCode" [disabled]="true">
+            <mat-option value="CZK">CZK Czech Republic Koruna</mat-option>
+          </mat-select>
+        </mat-form-field>
+        
+        <mat-form-field appearance="fill" class="mx-2">
+          <input type="number" matInput formControlName="czkValue">
+        </mat-form-field>
+  
+        <img *ngIf="isLoading" class="spinner" src="assets/spinner.gif">
+        <div *ngIf="!isLoading" class="arrows-container text-center pt-3">
+          <span  class="h4">↔</span>
+        </div>
+        
+        <mat-form-field appearance="fill" class="mx-2">
+          <input type="number" matInput formControlName="otherValue">
+        </mat-form-field>
+    
+        <mat-form-field appearance="fill" [style.width.px]="250">
+          <mat-label>Currency</mat-label>
+          <mat-select formControlName="currencyCode">
+            <mat-option *ngFor="let currency of filteredCurrenciesList" [value]="currency.code">{{currency.code + " " + currency.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+  </div>
+</div>
+
+
